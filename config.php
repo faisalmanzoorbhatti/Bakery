@@ -69,9 +69,13 @@ define('TWILIO_ADMIN_PHONE', env('TWILIO_ADMIN_PHONE', ''));
  * @return mysqli
  */
 function getDbConnection() {
-    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-    if ($conn->connect_error) {
-        die("Database connection failed: " . $conn->connect_error);
+    try {
+        $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+        if ($conn->connect_error) {
+            die("<div style='font-family:sans-serif;padding:20px;background:#ffebee;color:#c62828;border-radius:8px;max-width:600px;margin:40px auto;border:1px solid #ef9a9a;'><h3>Database Connection Error</h3><p>" . htmlspecialchars($conn->connect_error) . "</p><p><small>Tip: Ensure MySQL is running in your XAMPP Control Panel.</small></p></div>");
+        }
+        return $conn;
+    } catch (mysqli_sql_exception $e) {
+        die("<div style='font-family:sans-serif;padding:20px;background:#ffebee;color:#c62828;border-radius:8px;max-width:600px;margin:40px auto;border:1px solid #ef9a9a;'><h3>Database Connection Failed</h3><p>" . htmlspecialchars($e->getMessage()) . "</p><p><small>Tip: Start MySQL in XAMPP or verify database credentials in <code>.env</code>.</small></p></div>");
     }
-    return $conn;
 }
