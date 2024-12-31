@@ -73,8 +73,8 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `name`, `email`, `password`, `phone`, `reset_token`) VALUES
-(1, 'Demo Customer', 'customer@example.com', '$2y$10$e8A5fpdrPgcCNSKnMXSdPeaJpehVnRYD.QcL/Ci3faYzvrIF6SV4G', '03001234567', NULL),
-(2, 'Admin User', 'admin@example.com', '$2y$10$e8A5fpdrPgcCNSKnMXSdPeaJpehVnRYD.QcL/Ci3faYzvrIF6SV4G', '03007654321', NULL);
+(1, 'Demo Customer', 'customer@example.com', '$2y$10$PBnB5UaKG9hWOUpuPikPl.1gC.ttAvubwuuYLgDHJ9pyVcNE9dPqi', '03001234567', NULL),
+(2, 'Admin User', 'admin@example.com', '$2y$10$PBnB5UaKG9hWOUpuPikPl.1gC.ttAvubwuuYLgDHJ9pyVcNE9dPqi', '03007654321', NULL);
 
 -- --------------------------------------------------------
 

@@ -1,8 +1,8 @@
 <?php
 session_start();
-
 require_once 'config.php';
 
+$error = "";
 $conn = getDbConnection();
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['token'])) {
@@ -16,10 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['token'])) {
     if ($result->num_rows > 0) {
         $_SESSION['reset_token'] = $token;
     } else {
-        echo "Invalid token or token expired.";
-        $stmt->close();
-        $conn->close();
-        exit();
+        $error = "This password reset link is invalid or has expired.";
     }
     $stmt->close();
 }
@@ -29,49 +26,82 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['reset_token'])) {
     $password = $_POST['password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
 
-    if ($password !== $confirm_password) {
-        echo "Passwords do not match.";
-        $conn->close();
-        exit();
-    }
-
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-    $stmt_update = $conn->prepare("UPDATE customers SET password = ?, reset_token = NULL WHERE reset_token = ?");
-    $stmt_update->bind_param("ss", $hashed_password, $token);
-
-    if ($stmt_update->execute()) {
-        unset($_SESSION['reset_token']);
-        $_SESSION['password_reset_success'] = true;
-        $stmt_update->close();
-        $conn->close();
-        header("Location: index.php");
-        exit();
+    if (strlen($password) < 6) {
+        $error = "Password must be at least 6 characters long.";
+    } elseif ($password !== $confirm_password) {
+        $error = "Passwords do not match.";
     } else {
-        echo "Error updating record: " . htmlspecialchars($conn->error);
-        $stmt_update->close();
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        $stmt_update = $conn->prepare("UPDATE customers SET password = ?, reset_token = NULL WHERE reset_token = ?");
+        $stmt_update->bind_param("ss", $hashed_password, $token);
+
+        if ($stmt_update->execute()) {
+            unset($_SESSION['reset_token']);
+            $stmt_update->close();
+            $conn->close();
+            header("Location: index.php?reset_success=1");
+            exit();
+        } else {
+            $error = "Error updating password. Please try again.";
+            $stmt_update->close();
+        }
     }
 }
-
 $conn->close();
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Reset Password</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set New Password - Online Bay Bakery</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Reset Password</h2>
-    <?php if (isset($_SESSION['reset_token'])): ?>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            New Password: <input type="password" name="password" required><br>
-            Confirm Password: <input type="password" name="confirm_password" required><br>
-            <button type="submit">Reset Password</button>
-        </form>
-    <?php else: ?>
-        <p>Invalid or expired token.</p>
-    <?php endif; ?>
+    <div class="auth-wrapper">
+        <div class="auth-banner">
+            <div class="auth-banner-content">
+                <h1>Online Bay Bakery</h1>
+                <p>Create a secure new password for your customer account.</p>
+            </div>
+        </div>
+        <div class="auth-form-side">
+            <div class="auth-card">
+                <h2>Set New Password</h2>
+                <p class="subtitle">Enter and confirm your new password below</p>
+
+                <?php if (!empty($error)): ?>
+                    <div class="alert alert-error">
+                        <?php echo htmlspecialchars($error); ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION['reset_token'])): ?>
+                    <form action="reset_password.php" method="POST">
+                        <div class="form-group">
+                            <label for="password">New Password</label>
+                            <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirm_password">Confirm New Password</label>
+                            <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="••••••••" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Update Password</button>
+                    </form>
+                <?php else: ?>
+                    <div style="margin-top: 20px;">
+                        <a href="forgot_password.php" class="btn btn-primary">Request a New Reset Link</a>
+                    </div>
+                <?php endif; ?>
+
+                <div class="auth-card-footer">
+                    <a href="index.php">Back to Sign In</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
