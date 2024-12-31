@@ -193,7 +193,7 @@ $products_res = $conn->query("SELECT products.*, categories.name as category_nam
                     ?>
                         <tr class="order-row">
                             <td style="display:flex; align-items:center; gap:12px;">
-                                <img src="<?php echo htmlspecialchars($img); ?>" class="product-thumb">
+                                <img src="<?php echo htmlspecialchars($img); ?>" class="product-thumb" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=100&q=80';">
                                 <div>
                                     <strong style="color:var(--espresso);"><?php echo htmlspecialchars($prod['name']); ?></strong><br>
                                     <span style="font-size:0.8rem; color:var(--muted);">ID: #<?php echo $prod['id']; ?></span>

@@ -271,7 +271,7 @@ $final_total = max(0, ($subtotal - $discount_amount + $delivery_fee + $tax));
                         $img_src = !empty($item['image_path']) ? $item['image_path'] : 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=300&q=80';
                     ?>
                         <div class="cart-item-card">
-                            <img src="<?php echo htmlspecialchars($img_src); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="cart-item-thumb">
+                            <img src="<?php echo htmlspecialchars($img_src); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="cart-item-thumb" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=300&q=80';">
                             <div style="flex:1;">
                                 <div style="font-size:0.75rem; text-transform:uppercase; color:var(--primary-dark); font-weight:700; letter-spacing:0.8px;">
                                     <?php echo htmlspecialchars($item['category_name'] ?? 'Bakery Item'); ?>

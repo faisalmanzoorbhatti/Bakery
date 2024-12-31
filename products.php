@@ -172,7 +172,7 @@ $conn->close();
         <div class="section-header">
             <div>
                 <h2 id="catalogHeading" class="section-title">All Handcrafted Bakery Delights</h2>
-                <p id="catalogSubtitle" class="section-subtitle">Showing all 34 freshly baked gourmet creations</p>
+                <p id="catalogSubtitle" class="section-subtitle">Showing all 42 freshly baked gourmet creations</p>
             </div>
             <div style="font-size:0.92rem; color:var(--muted); font-weight:500;">
                 <span id="visibleCount"><?php echo count($products); ?></span> items available
@@ -189,7 +189,7 @@ $conn->close();
             ?>
                 <div class="product-card" data-category-id="<?php echo $cid; ?>" data-title="<?php echo strtolower(htmlspecialchars($prod['name'])); ?>" data-desc="<?php echo strtolower(htmlspecialchars($prod['description'])); ?>">
                     <div class="card-img-wrap">
-                        <img src="<?php echo htmlspecialchars($image_url); ?>" alt="<?php echo htmlspecialchars($prod['name']); ?>" class="card-img" loading="lazy">
+                        <img src="<?php echo htmlspecialchars($image_url); ?>" alt="<?php echo htmlspecialchars($prod['name']); ?>" class="card-img" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80';">
                         <?php if (!empty($badge)): ?>
                             <div class="card-badge gold"><?php echo htmlspecialchars($badge); ?></div>
                         <?php endif; ?>
@@ -343,7 +343,7 @@ $conn->close();
             document.querySelector('.cat-pill[data-category="all"]').classList.add('active');
             currentCategory = 'all';
             catalogHeading.textContent = "All Handcrafted Bakery Delights";
-            catalogSubtitle.textContent = "Showing all 34 freshly baked gourmet creations";
+            catalogSubtitle.textContent = "Showing all 42 freshly baked gourmet creations";
             filterProducts();
         }
 

@@ -189,7 +189,7 @@ $conn->close();
                                 $it_img = !empty($it['image_path']) ? $it['image_path'] : 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=200&q=80';
                             ?>
                                 <div class="order-item-row">
-                                    <img src="<?php echo htmlspecialchars($it_img); ?>" style="width:50px; height:50px; border-radius:8px; object-fit:cover; flex-shrink:0;">
+                                    <img src="<?php echo htmlspecialchars($it_img); ?>" style="width:50px; height:50px; border-radius:8px; object-fit:cover; flex-shrink:0;" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=200&q=80';">
                                     <div style="flex:1;">
                                         <div style="font-size:0.75rem; text-transform:uppercase; color:var(--primary-dark); font-weight:700;">
                                             <?php echo htmlspecialchars($it['category_name'] ?? 'Bakery Item'); ?>

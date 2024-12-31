@@ -230,7 +230,7 @@ $final_total = max(0, ($subtotal - $discount_amount + $delivery_fee + $tax));
                             $img = !empty($item['image_path']) ? $item['image_path'] : 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=200&q=80';
                         ?>
                             <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
-                                <img src="<?php echo htmlspecialchars($img); ?>" style="width:48px; height:48px; border-radius:8px; object-fit:cover; flex-shrink:0;">
+                                <img src="<?php echo htmlspecialchars($img); ?>" style="width:48px; height:48px; border-radius:8px; object-fit:cover; flex-shrink:0;" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=200&q=80';">
                                 <div style="flex:1; font-size:0.88rem;">
                                     <strong style="color:var(--espresso);"><?php echo htmlspecialchars($item['name']); ?></strong><br>
                                     <span style="color:var(--muted);"><?php echo (int)$item['quantity']; ?> &times; $<?php echo number_format($item['price'], 2); ?></span>

@@ -8,7 +8,7 @@
   <a href="#features"><img src="https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP Version" /></a>
   <a href="#features"><img src="https://img.shields.io/badge/MariaDB-13.0+-4479A1?style=for-the-badge&logo=mariadb&logoColor=white" alt="Database" /></a>
   <a href="#features"><img src="https://img.shields.io/badge/CSS3-Luxury_Artisanal_UI-orange?style=for-the-badge" alt="CSS3" /></a>
-  <a href="#features"><img src="https://img.shields.io/badge/Items-34_Gourmet_Bakes-amber?style=for-the-badge" alt="Items" /></a>
+  <a href="#features"><img src="https://img.shields.io/badge/Items-42_Gourmet_Bakes-amber?style=for-the-badge" alt="Items" /></a>
   <a href="#license"><img src="https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge" alt="License" /></a>
 </p>
 
@@ -18,18 +18,18 @@
 
 **L'Atelier Gourmet Bakery** is an e-commerce platform crafted for high-end bakeries, artisan patisseries, and gourmet confectioneries. Inspired by world-renowned European boulangeries, it delivers a pitch-ready portfolio experience built to impress bakery owners looking to scale online delivery operations.
 
-The platform comes pre-loaded with **34 handcrafted gourmet bakery items** across 6 rich categories, live instant search, category pill filters, animated toast notifications, a responsive shopping cart with coupon support (`BAKERY10`), multi-channel delivery slot scheduling, customer order tracking, and an **Admin Control Portal** for live order fulfillment and menu management.
+The platform comes pre-loaded with **42 handcrafted gourmet bakery items** across 6 rich categories, live instant search, category pill filters, animated toast notifications, a responsive shopping cart with coupon support (`BAKERY10`), multi-channel delivery slot scheduling, customer order tracking, and an **Admin Control Portal** for live order fulfillment and menu management.
 
 ---
 
 ## ✨ Flagship Features
 
-### 🥐 1. 34 Handcrafted Bakery Items (6 Gourmet Categories)
-* **Artisanal Cakes & Cheesecakes (6):** Belgian Dark Chocolate Ganache Cake, Signature Lotus Biscoff Baked Cheesecake, Red Velvet Royale, NY Baked Berry Cheesecake, Salted Caramel Pecan Cake, Classic Italian Tiramisu.
-* **Fresh Sourdough & Crusty Breads (6):** San Francisco Artisan Sourdough (48-Hr Ferment), Traditional Parisian Baguette, Rosemary Sea Salt Focaccia, Golden Brioche Loaf, Ancient Grains Loaf, Garlic Herb Pull-Apart.
-* **Viennoiserie & French Pastries (6):** 100% French Butter Croissants, Pain au Chocolat, Roasted Almond Frangipane Croissant, Bronte Pistachio Custard Danish, Cinnamon Brioche Swirl, Fresh Berry Custard Tartlet.
-* **Gourmet Cookies & Brownies (6):** Valrhona Double Dark Sea Salt Cookies, Red Velvet White Choc Chunk, Fudgy Walnut Brownie Slab, Paris Macaron Luxe Box (6 Pcs), Salted Caramel Blondie, Molten Nutella Lava Cookie.
-* **Savory Bites & Artisan Quiches (5):** Smoked Chicken & Wild Mushroom Quiche, Spinach & Feta Danish, Woodfired Beef Pastrami Calzone, Crispy Chicken Patties, Tandoori Paneer Turnover.
+### 🥐 1. 42 Handcrafted Bakery Items (6 Gourmet Categories)
+* **Artisanal Cakes & Cheesecakes (8):** Belgian Dark Chocolate Ganache Cake, Signature Lotus Biscoff Baked Cheesecake, Red Velvet Royale, NY Baked Berry Cheesecake, Salted Caramel Pecan Cake, Classic Italian Tiramisu, Wild Strawberry Chiffon, Spiced Carrot Walnut Cake.
+* **Fresh Sourdough & Crusty Breads (8):** San Francisco Artisan Sourdough (48-Hr Ferment), Traditional Parisian Baguette, Rosemary Sea Salt Focaccia, Golden Brioche Loaf, Ancient Grains Loaf, Garlic Herb Pull-Apart, Italian Olive Ciabatta, Dark Caraway Rye.
+* **Viennoiserie & French Pastries (8):** 100% French Butter Croissants, Pain au Chocolat, Roasted Almond Frangipane Croissant, Bronte Pistachio Custard Danish, Cinnamon Brioche Swirl, Fresh Berry Custard Tartlet, Parisian Chocolate Éclair, Vanilla Mille-Feuille.
+* **Gourmet Cookies & Brownies (7):** Valrhona Double Dark Sea Salt Cookies, Red Velvet White Choc Chunk, Fudgy Walnut Brownie Slab, Paris Macaron Luxe Box (6 Pcs), Salted Caramel Blondie, Molten Nutella Lava Cookie, Kyoto Matcha White Choc Cookie.
+* **Savory Bites & Artisan Quiches (6):** Smoked Chicken & Wild Mushroom Quiche, Spinach & Feta Danish, Woodfired Beef Pastrami Calzone, Crispy Chicken Patties, Tandoori Paneer Turnover, Farmhouse Chicken Pot Pie.
 * **Handcrafted Beverages & Roastery (5):** Madagascar Vanilla Bean Velvet Latte, Iced Salted Caramel Macchiato, Belgian Dark Hot Cocoa, Japanese Uji Matcha Latte, Citrus Mint Sparkler.
 
 ### 📱 2. 100% Fluid Responsive Design

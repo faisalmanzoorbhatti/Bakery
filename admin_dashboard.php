@@ -169,7 +169,7 @@ while ($it = $items_res->fetch_assoc()) {
         </a>
         <div class="nav-links">
             <a href="admin_dashboard.php" class="active">Live Orders</a>
-            <a href="admin_products.php">Manage Products (34)</a>
+            <a href="admin_products.php">Manage Products (<?php echo (int)$total_products; ?>)</a>
             <a href="products.php" target="_blank" style="color:var(--primary-dark); font-weight:600;">Customer Storefront &nearr;</a>
             <a href="logout.php" class="btn-logout">Logout</a>
         </div>
@@ -220,7 +220,7 @@ while ($it = $items_res->fetch_assoc()) {
                 <div class="stat-icon">🥐</div>
                 <div class="stat-info">
                     <div class="stat-value"><?php echo (int)$total_products; ?></div>
-                    <div class="stat-label">Menu Items (34)</div>
+                    <div class="stat-label">Menu Items (<?php echo (int)$total_products; ?>)</div>
                 </div>
             </div>
         </div>
@@ -296,7 +296,7 @@ while ($it = $items_res->fetch_assoc()) {
                                                     $item_img = !empty($item['image_path']) ? $item['image_path'] : 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=100&q=80';
                                                 ?>
                                                     <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px; border-bottom:1px dashed var(--border); padding-bottom:6px;">
-                                                        <img src="<?php echo htmlspecialchars($item_img); ?>" style="width:34px; height:34px; border-radius:6px; object-fit:cover;">
+                                                        <img src="<?php echo htmlspecialchars($item_img); ?>" style="width:34px; height:34px; border-radius:6px; object-fit:cover;" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=100&q=80';">
                                                         <div style="flex:1;">
                                                             <strong><?php echo htmlspecialchars($item['product_name']); ?></strong>
                                                             <span style="color:var(--muted); font-size:0.82rem;"> &times; <?php echo (int)$item['quantity']; ?></span>

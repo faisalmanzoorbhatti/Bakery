@@ -162,7 +162,7 @@ $conn->close();
 
         <!-- Category Banner -->
         <div class="category-hero">
-            <img src="<?php echo htmlspecialchars($category_banner); ?>" alt="<?php echo htmlspecialchars($category_name); ?>" class="category-hero-bg">
+            <img src="<?php echo htmlspecialchars($category_banner); ?>" alt="<?php echo htmlspecialchars($category_name); ?>" class="category-hero-bg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80';">
             <div class="category-hero-content">
                 <div class="hero-pill" style="margin-bottom:10px;">Artisanal Collection</div>
                 <h1 style="font-family:var(--font-heading); font-size:clamp(2rem, 3.6vw, 3rem); font-weight:700; margin-bottom:8px;">
@@ -204,7 +204,7 @@ $conn->close();
             ?>
                 <div class="product-card">
                     <div class="card-img-wrap">
-                        <img src="<?php echo htmlspecialchars($image_url); ?>" alt="<?php echo htmlspecialchars($prod['name']); ?>" class="card-img" loading="lazy">
+                        <img src="<?php echo htmlspecialchars($image_url); ?>" alt="<?php echo htmlspecialchars($prod['name']); ?>" class="card-img" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80';">
                         <?php if (!empty($badge)): ?>
                             <div class="card-badge gold"><?php echo htmlspecialchars($badge); ?></div>
                         <?php endif; ?>
