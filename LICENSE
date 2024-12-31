@@ -1,21 +1,19 @@
-MIT License
+PROPRIETARY & COMMERCIAL EVALUATION LICENSE
 
-Copyright (c) 2024-2026 Faisal Manzoor Bhatti
+Copyright (c) 2024-2026 Faisal Manzoor Bhatti. All Rights Reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Notice of Proprietary Rights:
+This software, including all design assets, database structures, UI components, and source code, is the exclusive intellectual property of Faisal Manzoor Bhatti.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Permitted Use:
+You are granted a non-exclusive, non-transferable right to view, inspect, and evaluate this repository solely for personal review, recruitment assessment, and portfolio demonstration purposes.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Prohibited Acts:
+1. Commercial Exploitation: You may NOT use, deploy, host, license, sell, monetize, or sublicense this software or any derivative works for any commercial purpose without prior written authorization from the copyright holder.
+2. Redistribution: You may NOT redistribute, republish, or rebrand this software or any part thereof in any public or private repository, marketplace, or commercial service.
+3. Removal of Notices: You may NOT remove, obscure, or alter any copyright notices, watermarks, or authorship credentials present in the source files.
+
+For commercial licensing, client deployments, or custom bakery installations, contact:
+Faisal Manzoor Bhatti (faisalmanzoor11147@gmail.com)
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.

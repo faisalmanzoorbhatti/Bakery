@@ -276,7 +276,7 @@ $conn->close();
             </div>
         </div>
         <div class="footer-copy">
-            &copy; <?php echo date('Y'); ?> L'Atelier Gourmet Bakery & Boulangerie. All rights reserved.
+            &copy; <?php echo date('Y'); ?> L'Atelier Gourmet Bakery & Boulangerie &bull; Architecture & Design by <strong style="color:#fbbf24;">Faisal Manzoor Bhatti</strong>. All rights reserved.
         </div>
     </footer>
 

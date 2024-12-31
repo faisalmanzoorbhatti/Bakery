@@ -9,7 +9,7 @@
   <a href="#features"><img src="https://img.shields.io/badge/MariaDB-13.0+-4479A1?style=for-the-badge&logo=mariadb&logoColor=white" alt="Database" /></a>
   <a href="#features"><img src="https://img.shields.io/badge/CSS3-Luxury_Artisanal_UI-orange?style=for-the-badge" alt="CSS3" /></a>
   <a href="#features"><img src="https://img.shields.io/badge/Items-42_Gourmet_Bakes-amber?style=for-the-badge" alt="Items" /></a>
-  <a href="#license"><img src="https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge" alt="License" /></a>
+  <a href="#license"><img src="https://img.shields.io/badge/License-Proprietary-red.svg?style=for-the-badge" alt="License" /></a>
 </p>
 
 ---
@@ -106,5 +106,5 @@ The login page features **1-click autofill buttons** for rapid testing:
 
 ---
 
-## 📄 License
-This project is open-source under the [MIT License](LICENSE).
+## 📄 License & Intellectual Property
+This project is protected under a [Proprietary & Commercial Evaluation License](LICENSE) &copy; 2024-2026 **Faisal Manzoor Bhatti**. Unauthorized commercial deployment, reselling, or redistribution without permission is strictly prohibited. For commercial licensing or custom bakery deployments, contact `faisalmanzoor11147@gmail.com`.
