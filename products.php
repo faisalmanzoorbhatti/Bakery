@@ -119,28 +119,76 @@ $conn->close();
     <div class="container">
         <!-- Hero Showcase Banner -->
         <div class="bakery-hero">
-            <div class="hero-content">
-                <div class="hero-pill">
-                    <span>✨</span> Master Pâtisserie & Sourdough Boulangerie
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-pill">
+                        <span class="pulse-dot"></span>
+                        <span>Master Pâtisserie & Sourdough Boulangerie</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Where Artisanal Craft <br><span>Meets Pure Passion.</span>
+                    </h1>
+                    <p class="hero-desc">
+                        Slow-fermented French sourdoughs, 27-layer flaky butter croissants, Belgian chocolate gateaux, and gourmet quiches. Freshly pulled from stone hearth ovens every morning with Normandy cultured butter and organic flours.
+                    </p>
+                    
+                    <div class="hero-cta-group">
+                        <a href="#productGrid" class="btn-hero-primary">
+                            <span>✨ Explore 42 Fresh Bakes</span>
+                            <span class="btn-arrow">→</span>
+                        </a>
+                        <a href="#productSearch" class="btn-hero-secondary" onclick="document.getElementById('productSearch').focus();">
+                            <span>🔍 Find Your Favorite</span>
+                        </a>
+                    </div>
+
+                    <div class="hero-social-proof">
+                        <div class="rating-stars">★★★★★</div>
+                        <div class="rating-info">
+                            <strong>4.9 / 5.0 Rating</strong>
+                            <span>from 2,800+ Verified Pastry Connoisseurs</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-perks">
+                        <div class="hero-perk-item">
+                            <span>🌾</span> 100% Organic Flours
+                        </div>
+                        <div class="hero-perk-item">
+                            <span>🧈</span> Normandy Cultured Butter
+                        </div>
+                        <div class="hero-perk-item">
+                            <span>⏱️</span> 48-Hour Cold Proof
+                        </div>
+                        <div class="hero-perk-item">
+                            <span>🚚</span> Same-Day Oven Fresh Delivery
+                        </div>
+                    </div>
                 </div>
-                <h1 class="hero-title">
-                    Where Craft Meets Passion: <span>Artisanal Bakery</span>
-                </h1>
-                <p class="hero-desc">
-                    Slow-fermented French sourdoughs, flaky butter croissants, Belgian chocolate cakes, and gourmet quiches. Freshly baked every day with organic heritage ingredients.
-                </p>
-                <div class="hero-perks">
-                    <div class="hero-perk-item">
-                        <span>🌾</span> 100% Organic Flours
-                    </div>
-                    <div class="hero-perk-item">
-                        <span>🧈</span> Normandy Cultured Butter
-                    </div>
-                    <div class="hero-perk-item">
-                        <span>⏱️</span> 48-Hour Cold Proof
-                    </div>
-                    <div class="hero-perk-item">
-                        <span>🚚</span> Same-Day Oven Fresh Delivery
+
+                <div class="hero-visual-card">
+                    <div class="hero-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=1000&q=80" alt="Freshly Baked Artisanal French Croissants" class="hero-main-img" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80'">
+                        <div class="hero-img-gradient-overlay"></div>
+                        
+                        <!-- Floating Glassmorphism Badge: Top Right -->
+                        <div class="hero-float-badge float-top-right">
+                            <span class="live-dot"></span>
+                            <div>
+                                <div class="float-title">Batch #3 Hearth Fresh</div>
+                                <div class="float-sub">Pulled 18 mins ago</div>
+                            </div>
+                        </div>
+
+                        <!-- Floating Glassmorphism Badge: Bottom Left -->
+                        <div class="hero-float-badge float-bottom-left">
+                            <div class="float-icon">🥐</div>
+                            <div>
+                                <div class="float-title">Master Baker's Choice</div>
+                                <div class="float-sub">27-Layer French Butter Croissant</div>
+                                <div class="float-rating">⭐ 4.95 (580+ reviews)</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
