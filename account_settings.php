@@ -74,7 +74,11 @@ $conn->close();
             <span>🥖</span> Online Bay Bakery
         </a>
         <div class="nav-links">
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                <a href="admin_dashboard.php" style="background:#fef3c7; color:#92400e; font-weight:600;">🛡️ Admin Dashboard</a>
+            <?php endif; ?>
             <a href="products.php">Categories</a>
+            <a href="my_orders.php">My Orders</a>
             <a href="view_cart.php">Cart</a>
             <a href="account_settings.php" class="active">Settings</a>
             <a href="logout.php" class="btn-logout">Logout</a>

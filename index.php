@@ -1,7 +1,11 @@
 <?php
 session_start();
 if (isset($_SESSION['customer_id'])) {
-    header("Location: products.php");
+    if (($_SESSION['role'] ?? '') === 'admin') {
+        header("Location: admin_dashboard.php");
+    } else {
+        header("Location: products.php");
+    }
     exit();
 }
 
@@ -65,10 +69,20 @@ $reset_success = isset($_GET['reset_success']);
                     <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Sign In</button>
                 </form>
 
-                <div style="margin-top: 20px; padding: 12px 16px; background: var(--light-gray); border-radius: 8px; font-size: 0.85rem; border: 1px dashed var(--border);">
-                    <strong>💡 Demo Credentials:</strong><br>
-                    <span>Email: <code>customer@example.com</code></span><br>
-                    <span>Password: <code>password123</code></span>
+                <div style="margin-top: 20px; padding: 14px 18px; background: var(--light-gray); border-radius: 8px; font-size: 0.85rem; border: 1px dashed var(--border);">
+                    <strong>💡 Testing Accounts & Roles:</strong>
+                    <div style="margin-top: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div style="background:#ffffff; padding:8px 10px; border-radius:6px; border:1px solid var(--border);">
+                            <strong style="color:var(--dark);">👤 Customer:</strong><br>
+                            <span><code>customer@example.com</code></span><br>
+                            <span>Pass: <code>password123</code></span>
+                        </div>
+                        <div style="background:#ffffff; padding:8px 10px; border-radius:6px; border:1px solid #f59e0b;">
+                            <strong style="color:#b45309;">🛡️ Admin:</strong><br>
+                            <span><code>admin@example.com</code></span><br>
+                            <span>Pass: <code>password123</code></span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="auth-card-footer">

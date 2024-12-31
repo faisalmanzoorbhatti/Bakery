@@ -19,7 +19,11 @@ if (!isset($_SESSION['customer_id'])) {
             <span>🥖</span> Online Bay Bakery
         </a>
         <div class="nav-links">
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                <a href="admin_dashboard.php" style="background:#fef3c7; color:#92400e; font-weight:600;">🛡️ Admin Dashboard</a>
+            <?php endif; ?>
             <a href="products.php">Categories</a>
+            <a href="my_orders.php">My Orders</a>
             <a href="view_cart.php">Cart</a>
             <a href="account_settings.php">Settings</a>
             <a href="logout.php" class="btn-logout">Logout</a>
@@ -36,15 +40,15 @@ if (!isset($_SESSION['customer_id'])) {
 
             <div class="alert alert-success" style="text-align: left; margin-bottom: 30px;">
                 <strong>📱 Order Confirmation:</strong><br>
-                An automated SMS confirmation has been dispatched to your registered phone number.
+                Your order is confirmed and has been sent to the bakery kitchen. You can track preparation status live.
             </div>
 
-            <div style="display:flex; justify-content:center; gap:15px;">
-                <a href="products.php" class="btn btn-primary" style="width:auto; padding:12px 30px;">
-                    Continue Shopping &rarr;
+            <div style="display:flex; justify-content:center; gap:15px; flex-wrap:wrap;">
+                <a href="my_orders.php" class="btn btn-primary" style="width:auto; padding:12px 25px;">
+                    Track in My Orders &rarr;
                 </a>
-                <a href="account_settings.php" class="btn btn-secondary" style="width:auto;">
-                    My Account
+                <a href="products.php" class="btn btn-secondary" style="width:auto; padding:12px 25px;">
+                    Continue Shopping
                 </a>
             </div>
         </div>

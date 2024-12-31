@@ -47,7 +47,11 @@ $cart_stmt->close();
             <span>🥖</span> Online Bay Bakery
         </a>
         <div class="nav-links">
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                <a href="admin_dashboard.php" style="background:#fef3c7; color:#92400e; font-weight:600;">🛡️ Admin Dashboard</a>
+            <?php endif; ?>
             <a href="products.php" class="active">Categories</a>
+            <a href="my_orders.php">My Orders</a>
             <a href="view_cart.php">Cart <?php if ($cart_count > 0): ?><span style="background:var(--primary); color:white; padding:2px 7px; border-radius:10px; font-size:0.75rem;"><?php echo $cart_count; ?></span><?php endif; ?></a>
             <a href="account_settings.php">Settings</a>
             <a href="logout.php" class="btn-logout">Logout</a>

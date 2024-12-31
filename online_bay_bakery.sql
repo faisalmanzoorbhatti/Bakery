@@ -64,6 +64,7 @@ CREATE TABLE `customers` (
   `email` varchar(100) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `phone` varchar(15) DEFAULT NULL,
+  `role` varchar(20) NOT NULL DEFAULT 'customer',
   `reset_token` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -72,9 +73,9 @@ CREATE TABLE `customers` (
 -- (Default password for demo accounts is: password123)
 --
 
-INSERT INTO `customers` (`id`, `name`, `email`, `password`, `phone`, `reset_token`) VALUES
-(1, 'Demo Customer', 'customer@example.com', '$2y$10$PBnB5UaKG9hWOUpuPikPl.1gC.ttAvubwuuYLgDHJ9pyVcNE9dPqi', '03001234567', NULL),
-(2, 'Admin User', 'admin@example.com', '$2y$10$PBnB5UaKG9hWOUpuPikPl.1gC.ttAvubwuuYLgDHJ9pyVcNE9dPqi', '03007654321', NULL);
+INSERT INTO `customers` (`id`, `name`, `email`, `password`, `phone`, `role`, `reset_token`) VALUES
+(1, 'Demo Customer', 'customer@example.com', '$2y$10$PBnB5UaKG9hWOUpuPikPl.1gC.ttAvubwuuYLgDHJ9pyVcNE9dPqi', '03001234567', 'customer', NULL),
+(2, 'Admin User', 'admin@example.com', '$2y$10$PBnB5UaKG9hWOUpuPikPl.1gC.ttAvubwuuYLgDHJ9pyVcNE9dPqi', '03007654321', 'admin', NULL);
 
 -- --------------------------------------------------------
 
