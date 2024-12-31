@@ -61,9 +61,19 @@ $conn->close();
 <body>
     <div class="auth-wrapper">
         <div class="auth-banner">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <div class="brand-icon" style="background:#ffffff; color:var(--primary);">🥐</div>
+                <span style="font-family:var(--font-heading); font-size:1.5rem; font-weight:700; color:#ffffff; letter-spacing:-0.3px;">L'Atelier Bakery</span>
+            </div>
+            
             <div class="auth-banner-content">
-                <h1>Online Bay Bakery</h1>
-                <p>Create a secure new password for your customer account.</p>
+                <div class="hero-pill" style="margin-bottom:14px;">Password Reset</div>
+                <h1>Choose a Secure Password</h1>
+                <p>Create a secure new password for your customer account to continue ordering fresh bakes.</p>
+            </div>
+
+            <div style="font-size:0.85rem; color:#d6d3d1;">
+                &copy; <?php echo date('Y'); ?> L'Atelier Gourmet Bakery. All rights reserved.
             </div>
         </div>
         <div class="auth-form-side">

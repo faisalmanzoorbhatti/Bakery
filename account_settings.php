@@ -16,14 +16,15 @@ $error = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['update_name'])) {
         $name = trim($_POST['name'] ?? '');
+        $phone = trim($_POST['phone'] ?? '');
         if (!empty($name)) {
-            $stmt = $conn->prepare("UPDATE customers SET name = ? WHERE id = ?");
-            $stmt->bind_param("si", $name, $customer_id);
+            $stmt = $conn->prepare("UPDATE customers SET name = ?, phone = ? WHERE id = ?");
+            $stmt->bind_param("ssi", $name, $phone, $customer_id);
             if ($stmt->execute()) {
                 $_SESSION['customer_name'] = $name;
-                $message = "Your name has been updated successfully.";
+                $message = "Your profile information has been updated successfully.";
             } else {
-                $error = "Failed to update name.";
+                $error = "Failed to update profile.";
             }
             $stmt->close();
         }
@@ -52,10 +53,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Fetch current user details
-$stmt = $conn->prepare("SELECT name, email, phone FROM customers WHERE id = ?");
+$stmt = $conn->prepare("SELECT name, email, phone, role FROM customers WHERE id = ?");
 $stmt->bind_param("i", $customer_id);
 $stmt->execute();
-$stmt->bind_result($name, $email, $phone);
+$stmt->bind_result($name, $email, $phone, $role);
 $stmt->fetch();
 $stmt->close();
 $conn->close();
@@ -65,19 +66,28 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Settings - Online Bay Bakery</title>
+    <title>Account Settings - L'Atelier Gourmet Bakery</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="top-announcement">
+        <span>🥖 <strong>Fresh Morning Bakes:</strong> Batch #1 freshly pulled from hearth ovens</span>
+        <span class="badge-pill">Free Express Delivery on orders over $35</span>
+    </div>
+
     <nav class="navbar">
         <a href="products.php" class="brand-logo">
-            <span>🥖</span> Online Bay Bakery
+            <div class="brand-icon">🥐</div>
+            <div class="brand-text-wrap">
+                <span class="brand-name">L'Atelier Bakery</span>
+                <span class="brand-tagline">Artisanal Boulangerie</span>
+            </div>
         </a>
         <div class="nav-links">
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                <a href="admin_dashboard.php" style="background:#fef3c7; color:#92400e; font-weight:600;">🛡️ Admin Dashboard</a>
+                <a href="admin_dashboard.php" style="background:#fef3c7; color:#92400e; font-weight:700;">🛡️ Admin Portal</a>
             <?php endif; ?>
-            <a href="products.php">Categories</a>
+            <a href="products.php">Menu Catalog</a>
             <a href="my_orders.php">My Orders</a>
             <a href="view_cart.php">Cart</a>
             <a href="account_settings.php" class="active">Settings</a>
@@ -85,10 +95,12 @@ $conn->close();
         </div>
     </nav>
 
-    <div class="container" style="max-width: 600px;">
-        <div class="page-header" style="text-align: left; margin-bottom: 25px;">
-            <h1>Account Settings</h1>
-            <p>Manage your profile name and password credentials</p>
+    <div class="container" style="max-width: 800px;">
+        <div class="section-header" style="margin-bottom:28px;">
+            <div>
+                <h1 class="section-title">Account Profile Settings</h1>
+                <p class="section-subtitle">Manage your personal credentials, contact phone, and security</p>
+            </div>
         </div>
 
         <?php if (!empty($message)): ?>
@@ -103,43 +115,70 @@ $conn->close();
             </div>
         <?php endif; ?>
 
-        <div class="form-box" style="margin: 0 0 25px 0; max-width: 100%;">
-            <h3 style="margin-bottom: 15px; font-size: 1.15rem; color: var(--dark);">Profile Information</h3>
+        <div class="form-box" style="margin-bottom: 25px;">
+            <h3 style="font-family:var(--font-heading); font-size:1.3rem; color:var(--espresso); margin-bottom:18px;">
+                👤 Personal Profile
+            </h3>
             <form action="account_settings.php" method="POST">
-                <div class="form-group">
-                    <label for="name">Display Name</label>
-                    <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars($name ?? ''); ?>" required>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div class="form-group">
+                        <label for="name">Display Name</label>
+                        <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars($name ?? ''); ?>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number (for SMS Tracking)</label>
+                        <input type="text" id="phone" name="phone" class="form-control" value="<?php echo htmlspecialchars($phone ?? ''); ?>" placeholder="0300-1234567">
+                    </div>
                 </div>
+
                 <div class="form-group">
-                    <label>Email Address (Read-only)</label>
-                    <input type="email" class="form-control" value="<?php echo htmlspecialchars($email ?? ''); ?>" disabled style="background:var(--light-gray); color:var(--gray);">
+                    <label>Registered Email Address</label>
+                    <input type="email" class="form-control" value="<?php echo htmlspecialchars($email ?? ''); ?>" disabled style="background:var(--surface-alt); color:var(--muted); cursor:not-allowed;">
                 </div>
-                <button type="submit" name="update_name" class="btn btn-primary" style="width: auto;">
-                    Update Name
+
+                <div class="form-group">
+                    <label>Account Role</label>
+                    <div>
+                        <span class="card-badge gold" style="position:static; display:inline-block;">
+                            <?php echo strtoupper(htmlspecialchars($role ?? 'CUSTOMER')); ?>
+                        </span>
+                    </div>
+                </div>
+
+                <button type="submit" name="update_name" class="btn btn-primary" style="padding:12px 24px; font-size:0.95rem;">
+                    Save Profile Changes
                 </button>
             </form>
         </div>
 
-        <div class="form-box" style="margin: 0; max-width: 100%;">
-            <h3 style="margin-bottom: 15px; font-size: 1.15rem; color: var(--dark);">Change Password</h3>
+        <div class="form-box">
+            <h3 style="font-family:var(--font-heading); font-size:1.3rem; color:var(--espresso); margin-bottom:18px;">
+                🔒 Security & Password Update
+            </h3>
             <form action="account_settings.php" method="POST">
-                <div class="form-group">
-                    <label for="new_password">New Password</label>
-                    <input type="password" id="new_password" name="new_password" class="form-control" placeholder="••••••••" required>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div class="form-group">
+                        <label for="new_password">New Password</label>
+                        <input type="password" id="new_password" name="new_password" class="form-control" placeholder="••••••••" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_password">Confirm New Password</label>
+                        <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="••••••••" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="confirm_password">Confirm New Password</label>
-                    <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="••••••••" required>
-                </div>
-                <button type="submit" name="change_password" class="btn btn-primary" style="width: auto;">
-                    Change Password
+
+                <button type="submit" name="change_password" class="btn btn-secondary" style="padding:12px 24px; font-size:0.95rem;">
+                    Update Password
                 </button>
             </form>
         </div>
     </div>
 
     <footer>
-        <p>&copy; <?php echo date('Y'); ?> Online Bay Bakery. Fresh Quality Baked Goods.</p>
+        <div class="footer-copy">
+            &copy; <?php echo date('Y'); ?> L'Atelier Gourmet Bakery & Boulangerie &bull; All rights reserved.
+        </div>
     </footer>
 </body>
 </html>

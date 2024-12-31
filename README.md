@@ -1,14 +1,14 @@
-# 🍰 Online Bay Bakery
+# 🥖 L'Atelier Gourmet Bakery & Boulangerie
 
 <p align="center">
-  <img src="images/cake.jpg" alt="Online Bay Bakery" width="600" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);" />
+  <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80" alt="L'Atelier Gourmet Bakery" width="100%" style="border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);" />
 </p>
 
 <p align="center">
   <a href="#features"><img src="https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP Version" /></a>
-  <a href="#features"><img src="https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" /></a>
-  <a href="#features"><img src="https://img.shields.io/badge/PHPMailer-SMTP-FF6F00?style=for-the-badge&logo=gmail&logoColor=white" alt="PHPMailer" /></a>
-  <a href="#features"><img src="https://img.shields.io/badge/Twilio-SMS_Alerts-F22F46?style=for-the-badge&logo=twilio&logoColor=white" alt="Twilio" /></a>
+  <a href="#features"><img src="https://img.shields.io/badge/MariaDB-13.0+-4479A1?style=for-the-badge&logo=mariadb&logoColor=white" alt="Database" /></a>
+  <a href="#features"><img src="https://img.shields.io/badge/CSS3-Luxury_Artisanal_UI-orange?style=for-the-badge" alt="CSS3" /></a>
+  <a href="#features"><img src="https://img.shields.io/badge/Items-34_Gourmet_Bakes-amber?style=for-the-badge" alt="Items" /></a>
   <a href="#license"><img src="https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge" alt="License" /></a>
 </p>
 
@@ -16,31 +16,52 @@
 
 ## 📖 Overview
 
-**Online Bay Bakery** is a full-featured web-based e-commerce platform built for artisanal bakeries and confectioneries. It offers a seamless customer shopping experience — from browsing handcrafted bakery items by category to managing carts, completing checkout via popular regional payment gateways (JazzCash, EasyPaisa), receiving real-time SMS order confirmations via Twilio, and self-service password recovery using Gmail SMTP.
+**L'Atelier Gourmet Bakery** is an e-commerce platform crafted for high-end bakeries, artisan patisseries, and gourmet confectioneries. Inspired by world-renowned European boulangeries, it delivers a pitch-ready portfolio experience built to impress bakery owners looking to scale online delivery operations.
+
+The platform comes pre-loaded with **34 handcrafted gourmet bakery items** across 6 rich categories, live instant search, category pill filters, animated toast notifications, a responsive shopping cart with coupon support (`BAKERY10`), multi-channel delivery slot scheduling, customer order tracking, and an **Admin Control Portal** for live order fulfillment and menu management.
 
 ---
 
-## ✨ Features
+## ✨ Flagship Features
 
-- 👤 **Customer Authentication & Profile Management**
-  - Secure registration and login with bcrypt password hashing (`PASSWORD_DEFAULT`).
-  - Session hijacking protection (`session_regenerate_id`).
-  - Account settings for updating personal info and changing passwords.
-- 🥐 **Dynamic Product Catalog**
-  - Products categorized by cakes, cookies, artisan breads, and pastries.
-  - Category filtering and detailed product listings.
-- 🛒 **Shopping Cart & Checkout**
-  - Real-time cart quantity tracking and instant total calculations.
-  - Multi-method checkout support (JazzCash, EasyPaisa, Cash on Delivery).
-- 📱 **Real-time Twilio SMS Notifications**
-  - Automated SMS confirmation sent upon successful order placement.
-- 🔑 **Secure Password Recovery**
-  - Tokenized password reset links sent via Gmail SMTP through PHPMailer.
-  - Single-use, time-sensitive cryptographic reset tokens (`bin2hex(random_bytes(32))`).
-- 🛡️ **Security-Hardened Architecture**
-  - Zero hardcoded secrets: all credentials managed via `.env` environment variables.
-  - SQL injection protection using prepared statements (`mysqli::prepare`).
-  - Strict `.gitignore` protecting dependencies and sensitive environment configs.
+### 🥐 1. 34 Handcrafted Bakery Items (6 Gourmet Categories)
+* **Artisanal Cakes & Cheesecakes (6):** Belgian Dark Chocolate Ganache Cake, Signature Lotus Biscoff Baked Cheesecake, Red Velvet Royale, NY Baked Berry Cheesecake, Salted Caramel Pecan Cake, Classic Italian Tiramisu.
+* **Fresh Sourdough & Crusty Breads (6):** San Francisco Artisan Sourdough (48-Hr Ferment), Traditional Parisian Baguette, Rosemary Sea Salt Focaccia, Golden Brioche Loaf, Ancient Grains Loaf, Garlic Herb Pull-Apart.
+* **Viennoiserie & French Pastries (6):** 100% French Butter Croissants, Pain au Chocolat, Roasted Almond Frangipane Croissant, Bronte Pistachio Custard Danish, Cinnamon Brioche Swirl, Fresh Berry Custard Tartlet.
+* **Gourmet Cookies & Brownies (6):** Valrhona Double Dark Sea Salt Cookies, Red Velvet White Choc Chunk, Fudgy Walnut Brownie Slab, Paris Macaron Luxe Box (6 Pcs), Salted Caramel Blondie, Molten Nutella Lava Cookie.
+* **Savory Bites & Artisan Quiches (5):** Smoked Chicken & Wild Mushroom Quiche, Spinach & Feta Danish, Woodfired Beef Pastrami Calzone, Crispy Chicken Patties, Tandoori Paneer Turnover.
+* **Handcrafted Beverages & Roastery (5):** Madagascar Vanilla Bean Velvet Latte, Iced Salted Caramel Macchiato, Belgian Dark Hot Cocoa, Japanese Uji Matcha Latte, Citrus Mint Sparkler.
+
+### 📱 2. 100% Fluid Responsive Design
+* Handcrafted responsive layout engineered for Mobile (360px+), Tablets/iPads, Laptops, and Ultrawide monitors.
+* No empty sidebars or rigid widths — uses modern fluid container tokens (`clamp(16px, 3.5vw, 40px)`).
+* Mobile-friendly bottom floating cart bar and touch-friendly steppers.
+
+### 🛡️ 3. Operations Admin Portal (`admin_dashboard.php` & `admin_products.php`)
+* **Live Revenue Analytics:** Total sales volume, order counts, customer registrations, and active menu items.
+* **Orders Management:** Full customer contact details (Name, Email, Phone), delivery time window, and expandable **"View Items"** breakdown with high-res product photos and quantities.
+* **Fulfillment Pipeline:** Update order statuses live (`Paid` &rarr; `Preparing (In Oven)` &rarr; `Out for Delivery` &rarr; `Completed`).
+* **Menu Publisher:** Add new bakery items, prices, descriptions, and custom badges (`⭐ Best Seller`, `🔥 Trending`, `🌾 48-Hr Ferment`).
+
+### 🛍️ 4. Customer Shopping Experience
+* Instant client-side search and category filtering with zero page reloads.
+* Interactive stepper quantity selector (`- 1 +`) with seamless AJAX Add-to-Cart.
+* Dynamic Free Delivery progress bar (unlocks free shipping over $35).
+* Coupon code support (use `BAKERY10` for 10% discount).
+* Delivery time slot selection (Morning, Afternoon, Evening, or Immediate Express 45 mins).
+* Special Baker's note field for custom cake messages.
+* Customer Order History (`my_orders.php`) with milestone timeline tracking.
+
+---
+
+## 🧪 Quick Testing Credentials
+
+The login page features **1-click autofill buttons** for rapid testing:
+
+| Role | Email | Password | Destination |
+| :--- | :--- | :--- | :--- |
+| **👤 Customer** | `customer@example.com` | `password123` | Storefront (`products.php`) |
+| **🛡️ Admin** | `admin@example.com` | `password123` | Admin Portal (`admin_dashboard.php`) |
 
 ---
 
@@ -48,130 +69,42 @@
 
 | Component | Technology |
 | :--- | :--- |
-| **Backend** | PHP 8.x |
-| **Database** | MySQL / MariaDB |
-| **Styling** | Vanilla CSS3 (Responsive UI) |
+| **Backend** | PHP 8.2+ |
+| **Database** | MariaDB 13.0+ / MySQL 8.0+ |
+| **Styling** | Vanilla CSS3 (Custom Design System, Typography, CSS Variables) |
+| **Typography** | Google Fonts (*Outfit* & *Playfair Display*) |
+| **Images** | High-Resolution Unsplash Food Photography CDN |
 | **Mailing** | PHPMailer (`^6.9`) via Google SMTP |
-| **SMS Gateway** | Twilio SDK (`^8.2`) |
-| **Dependency Manager** | Composer |
+| **SMS Alerts** | Twilio REST SDK (`^8.2`) |
 
 ---
 
-## 📁 Project Structure
+## 🚀 Local Installation & Setup
 
-```text
-Bakery/
-├── images/                  # Product and UI images
-├── .env.example             # Template for environment variables (Safe for VCS)
-├── .gitignore               # Strict gitignore rules (protects .env & vendor/)
-├── account_settings.php     # User account and password updates
-├── add_to_cart.php          # Cart addition handler
-├── category.php             # Category-specific product showcase
-├── checkout.php             # Checkout and payment method selection
-├── composer.json            # PHP project dependencies
-├── composer.lock            # Locked dependency versions
-├── config.php               # Centralized secure configuration & DB connector
-├── forgot_password.php      # SMTP email password reset initiator
-├── index.php                # Landing and customer sign-in portal
-├── login.php                # Authentication controller
-├── logout.php               # Session termination
-├── online_bay_bakery.sql    # Database schema with demo seed data
-├── process_payment.php      # Order completion and Twilio SMS dispatcher
-├── products.php             # Main category catalog view
-├── register.php             # User registration controller
-├── reset_password.php       # Password reset fulfillment
-├── style.css                # Global application stylesheet
-├── thank_you.php            # Order confirmation view
-└── view_cart.php            # Customer cart review page
-```
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/faisalmanzoorbhatti/Bakery.git
+   cd Bakery
+   ```
 
----
+2. **Configure Environment:**
+   ```bash
+   cp .env.example .env
+   # Update DB_HOST, DB_USER, DB_PASS in .env if needed
+   ```
 
-## 🚀 Getting Started
+3. **Import Database Schema:**
+   ```bash
+   mariadb -u root -p online_bay_bakery < online_bay_bakery.sql
+   ```
 
-### Prerequisites
-
-- [XAMPP](https://www.apachefriends.org/) or [WampServer](https://www.wampserver.com/) (Apache + PHP 8.0+ & MySQL)
-- [Composer](https://getcomposer.org/)
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/faisalmanzoorbhatti/Bakery.git
-cd Bakery
-```
-
-### 2. Configure Environment Variables
-
-Copy `.env.example` to `.env`:
-
-```bash
-cp .env.example .env
-```
-
-Open `.env` and fill in your local database credentials and API keys:
-
-```env
-DB_HOST=localhost
-DB_USER=root
-DB_PASS=
-DB_NAME=online_bay_bakery
-
-# Base Application URL
-APP_URL=http://localhost/Bakery
-
-# Gmail SMTP Settings
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=your_email@gmail.com
-SMTP_PASS=your_gmail_app_password
-
-# Twilio SMS Credentials
-TWILIO_ACCOUNT_SID=your_twilio_sid
-TWILIO_AUTH_TOKEN=your_twilio_auth_token
-TWILIO_PHONE_NUMBER=your_twilio_phone_number
-```
-
-### 3. Import Database
-
-1. Open **phpMyAdmin** (`http://localhost/phpmyadmin`).
-2. Create a database named `online_bay_bakery`.
-3. Import the sanitized schema file `online_bay_bakery.sql`.
-
-> **Demo Accounts (Password: `password123`):**
-> - Customer: `customer@example.com`
-> - Admin: `admin@example.com`
-
-### 4. Install Dependencies
-
-```bash
-composer install
-```
-
-### 5. Run the Application
-
-Place the folder in your web server root (e.g., `C:/xampp/htdocs/Bakery`) and navigate to:
-```text
-http://localhost/Bakery/index.php
-```
-
----
-
-## 🔒 Security Best Practices
-
-- **Never commit `.env`**: Always ensure `.env` remains in `.gitignore`.
-- **Use App Passwords**: For Gmail SMTP, generate a Google App Password rather than your account master password.
-- **Rotate Credentials**: If any API key is ever accidentally exposed, rotate it immediately in the respective service console (Twilio / Google Account).
-
----
-
-## 👤 Author
-
-**Faisal Manzoor Bhatti**
-- GitHub: [@faisalmanzoorbhatti](https://github.com/faisalmanzoorbhatti)
+4. **Launch Local PHP Server:**
+   ```bash
+   php -S localhost:8000
+   ```
+   Open **`http://localhost:8000`** in your browser.
 
 ---
 
 ## 📄 License
-
-This project is open-source and available under the [MIT License](LICENSE).
+This project is open-source under the [MIT License](LICENSE).

@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_order_status']
         $stmt_up = $conn->prepare("UPDATE orders SET payment_status = ? WHERE id = ?");
         $stmt_up->bind_param("si", $new_status, $order_id);
         if ($stmt_up->execute()) {
-            $msg = "Order #{$order_id} status updated to '{$new_status}'.";
+            $msg = "Order #{$order_id} status updated to '{$new_status}' successfully.";
         } else {
             $error = "Failed to update order status.";
         }
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_order_status']
 }
 
 // Statistics
-$total_revenue = $conn->query("SELECT SUM(total_amount) as rev FROM orders WHERE payment_status = 'Paid'")->fetch_assoc()['rev'] ?? 0;
+$total_revenue = $conn->query("SELECT SUM(total_amount) as rev FROM orders WHERE payment_status IN ('Paid', 'Preparing', 'Out for Delivery', 'Completed')")->fetch_assoc()['rev'] ?? 0;
 $total_orders = $conn->query("SELECT COUNT(*) as cnt FROM orders")->fetch_assoc()['cnt'] ?? 0;
 $total_customers = $conn->query("SELECT COUNT(*) as cnt FROM customers WHERE role != 'admin'")->fetch_assoc()['cnt'] ?? 0;
 $total_products = $conn->query("SELECT COUNT(*) as cnt FROM products")->fetch_assoc()['cnt'] ?? 0;
@@ -58,9 +58,10 @@ $sql_orders .= " ORDER BY orders.order_date DESC";
 $orders_result = $conn->query($sql_orders);
 
 // Fetch all order items mapped by order_id
-$items_sql = "SELECT order_items.*, products.name as product_name, products.image_path 
+$items_sql = "SELECT order_items.*, products.name as product_name, products.image_path, categories.name as category_name 
               FROM order_items 
-              JOIN products ON order_items.product_id = products.id";
+              JOIN products ON order_items.product_id = products.id 
+              LEFT JOIN categories ON products.category_id = categories.id";
 $items_res = $conn->query($items_sql);
 $order_items_map = [];
 while ($it = $items_res->fetch_assoc()) {
@@ -72,99 +73,117 @@ while ($it = $items_res->fetch_assoc()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Online Bay Bakery</title>
+    <title>Admin Portal - L'Atelier Gourmet Bakery</title>
     <link rel="stylesheet" href="style.css">
     <style>
         .admin-nav-badge {
-            background: #f59e0b;
-            color: #78350f;
+            background: #fef3c7;
+            color: #92400e;
             font-size: 0.75rem;
             font-weight: 700;
             padding: 3px 8px;
-            border-radius: 6px;
+            border-radius: var(--radius-pill);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
         .stat-card {
             background: #ffffff;
-            border-radius: var(--radius);
-            padding: 20px;
-            box-shadow: var(--shadow);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            box-shadow: var(--shadow-sm);
             border: 1px solid var(--border);
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 18px;
+            transition: var(--transition);
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
         .stat-icon {
             font-size: 2.2rem;
-            width: 55px;
-            height: 55px;
+            width: 58px;
+            height: 58px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--primary-light);
-            border-radius: 12px;
+            background: var(--surface-alt);
+            border-radius: var(--radius-md);
+            flex-shrink: 0;
         }
         .stat-info .stat-value {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--dark);
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--espresso);
+            line-height: 1.1;
         }
         .stat-info .stat-label {
-            color: var(--gray);
+            color: var(--muted);
             font-size: 0.88rem;
+            margin-top: 4px;
         }
         .status-badge {
             display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
+            padding: 4px 12px;
+            border-radius: var(--radius-pill);
             font-size: 0.82rem;
-            font-weight: 600;
+            font-weight: 700;
         }
         .status-Paid, .status-Completed { background: #dcfce7; color: #15803d; }
         .status-Pending { background: #fef3c7; color: #b45309; }
         .status-Preparing { background: #e0f2fe; color: #0369a1; }
         .status-Out-for-Delivery { background: #f3e8ff; color: #7e22ce; }
         .status-Cancelled { background: #fee2e2; color: #b91c1c; }
-        .order-row {
-            transition: background 0.15s;
-        }
         .order-row:hover {
-            background: #fafafa;
+            background: #fafaf9;
         }
         .items-collapse {
-            background: #fbfbfb;
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-top: 8px;
+            background: #fdfbf7;
+            padding: 14px 18px;
+            border-radius: var(--radius-md);
+            margin-top: 10px;
             font-size: 0.88rem;
             border: 1px solid var(--border);
         }
     </style>
 </head>
 <body>
+    <div class="top-announcement">
+        <span>🛡️ <strong>L'Atelier Admin Control Center:</strong> Live Bakery Operations & Orders Monitor</span>
+    </div>
+
     <nav class="navbar">
         <a href="admin_dashboard.php" class="brand-logo">
-            <span>🛡️</span> Online Bay Bakery <span class="admin-nav-badge">Admin Portal</span>
+            <div class="brand-icon">🥐</div>
+            <div class="brand-text-wrap">
+                <span class="brand-name">L'Atelier Bakery</span>
+                <span class="brand-tagline">Admin Control Center</span>
+            </div>
         </a>
         <div class="nav-links">
-            <a href="admin_dashboard.php" class="active">Orders</a>
-            <a href="admin_products.php">Manage Products</a>
-            <a href="products.php" target="_blank" style="color:var(--gray);">Customer View &nearr;</a>
+            <a href="admin_dashboard.php" class="active">Live Orders</a>
+            <a href="admin_products.php">Manage Products (34)</a>
+            <a href="products.php" target="_blank" style="color:var(--primary-dark); font-weight:600;">Customer Storefront &nearr;</a>
             <a href="logout.php" class="btn-logout">Logout</a>
         </div>
     </nav>
 
-    <div class="container" style="max-width: 1200px;">
-        <div class="page-header" style="text-align: left; margin-bottom: 25px;">
-            <h1>Bakery Management & Orders</h1>
-            <p>Monitor live customer orders, update delivery statuses, and oversee bakery sales</p>
+    <div class="container" style="max-width: 1400px;">
+        <div class="section-header" style="margin-bottom:28px;">
+            <div>
+                <h1 class="section-title">Bakery Orders & Sales Operations</h1>
+                <p class="section-subtitle">Monitor live customer orders, update delivery pipeline, and inspect item breakdowns</p>
+            </div>
+            <a href="admin_products.php" class="btn btn-primary" style="padding:10px 22px; font-size:0.92rem;">
+                ➕ Add New Bakery Item
+            </a>
         </div>
 
         <?php if (!empty($msg)): ?>
@@ -174,13 +193,13 @@ while ($it = $items_res->fetch_assoc()) {
             <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
 
-        <!-- Stats Overview -->
+        <!-- Key Metrics -->
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-icon">💰</div>
                 <div class="stat-info">
                     <div class="stat-value">$<?php echo number_format($total_revenue, 2); ?></div>
-                    <div class="stat-label">Total Revenue (Paid)</div>
+                    <div class="stat-label">Total Sales Revenue</div>
                 </div>
             </div>
             <div class="stat-card">
@@ -201,128 +220,137 @@ while ($it = $items_res->fetch_assoc()) {
                 <div class="stat-icon">🥐</div>
                 <div class="stat-info">
                     <div class="stat-value"><?php echo (int)$total_products; ?></div>
-                    <div class="stat-label">Products on Menu</div>
+                    <div class="stat-label">Menu Items (34)</div>
                 </div>
             </div>
         </div>
 
         <!-- Filter & Search Bar -->
-        <div style="background:#ffffff; border-radius:var(--radius); padding:16px 20px; box-shadow:var(--shadow); margin-bottom:25px; border:1px solid var(--border); display:flex; flex-wrap:wrap; gap:15px; justify-content:space-between; align-items:center;">
-            <form action="admin_dashboard.php" method="GET" style="display:flex; gap:12px; flex:1; flex-wrap:wrap;">
-                <input type="text" name="search" placeholder="Search by customer name, email, or Order #..." value="<?php echo htmlspecialchars($search); ?>" class="form-control" style="max-width:350px;">
-                <select name="status" class="form-control" style="width:auto;">
-                    <option value="">All Statuses</option>
+        <div class="filter-search-section" style="margin-bottom:24px;">
+            <form action="admin_dashboard.php" method="GET" style="display:flex; gap:14px; flex-wrap:wrap; align-items:center;">
+                <input type="text" name="search" placeholder="Search by customer name, email, or Order #..." value="<?php echo htmlspecialchars($search); ?>" class="form-control" style="flex:1; min-width:260px;">
+                <select name="status" class="form-control" style="width:auto; min-width:180px;">
+                    <option value="">All Order Statuses</option>
                     <option value="Paid" <?php echo ($status_filter === 'Paid') ? 'selected' : ''; ?>>Paid</option>
-                    <option value="Pending" <?php echo ($status_filter === 'Pending') ? 'selected' : ''; ?>>Pending</option>
-                    <option value="Preparing" <?php echo ($status_filter === 'Preparing') ? 'selected' : ''; ?>>Preparing</option>
+                    <option value="Preparing" <?php echo ($status_filter === 'Preparing') ? 'selected' : ''; ?>>Preparing (In Oven)</option>
                     <option value="Out for Delivery" <?php echo ($status_filter === 'Out for Delivery') ? 'selected' : ''; ?>>Out for Delivery</option>
-                    <option value="Completed" <?php echo ($status_filter === 'Completed') ? 'selected' : ''; ?>>Completed</option>
+                    <option value="Completed" <?php echo ($status_filter === 'Completed') ? 'selected' : ''; ?>>Completed (Delivered)</option>
+                    <option value="Pending" <?php echo ($status_filter === 'Pending') ? 'selected' : ''; ?>>Pending</option>
                     <option value="Cancelled" <?php echo ($status_filter === 'Cancelled') ? 'selected' : ''; ?>>Cancelled</option>
                 </select>
-                <button type="submit" class="btn btn-primary" style="width:auto; padding:10px 20px;">Filter</button>
+                <button type="submit" class="btn btn-primary" style="padding:12px 24px; white-space:nowrap;">
+                    Filter Orders
+                </button>
                 <?php if (!empty($search) || !empty($status_filter)): ?>
-                    <a href="admin_dashboard.php" class="btn btn-secondary" style="width:auto;">Clear</a>
+                    <a href="admin_dashboard.php" class="btn btn-secondary">Clear</a>
                 <?php endif; ?>
             </form>
-
-            <a href="admin_products.php" class="btn btn-secondary" style="width:auto;">
-                ➕ Add New Bakery Product
-            </a>
         </div>
 
         <!-- Orders Table -->
         <?php if ($orders_result->num_rows === 0): ?>
-            <div class="form-box" style="text-align:center; max-width:100%; padding:40px;">
-                <div style="font-size:2.5rem; margin-bottom:10px;">📋</div>
+            <div class="form-box" style="text-align:center; padding:50px 20px;">
+                <div style="font-size:3rem; margin-bottom:12px;">📋</div>
                 <h3>No Orders Found</h3>
-                <p style="color:var(--gray);">There are no customer orders matching your search or filter.</p>
+                <p style="color:var(--muted);">There are no orders matching your current filter.</p>
             </div>
         <?php else: ?>
-            <table class="cart-table" style="background:#ffffff;">
-                <thead>
-                    <tr>
-                        <th>Order #</th>
-                        <th>Customer Details</th>
-                        <th>Date & Time</th>
-                        <th>Total Amount</th>
-                        <th>Payment Method</th>
-                        <th>Order Status</th>
-                        <th>Update Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while ($ord = $orders_result->fetch_assoc()): 
-                        $oid = $ord['id'];
-                        $status_class = str_replace(' ', '-', $ord['payment_status']);
-                        $items = $order_items_map[$oid] ?? [];
-                    ?>
-                        <tr class="order-row">
-                            <td>
-                                <strong style="color:var(--primary); font-size:1.05rem;">#<?php echo $oid; ?></strong>
-                            </td>
-                            <td>
-                                <strong><?php echo htmlspecialchars($ord['customer_name'] ?? 'Guest Customer'); ?></strong><br>
-                                <span style="font-size:0.85rem; color:var(--gray);"><?php echo htmlspecialchars($ord['customer_email'] ?? 'No email'); ?></span><br>
-                                <span style="font-size:0.85rem; color:var(--gray);">📞 <?php echo htmlspecialchars($ord['customer_phone'] ?? 'N/A'); ?></span>
-                                
-                                <!-- Items Dropdown / Summary -->
-                                <details style="margin-top:6px; cursor:pointer;">
-                                    <summary style="color:var(--primary); font-weight:600; font-size:0.85rem;">
-                                        View Items (<?php echo count($items); ?>)
-                                    </summary>
-                                    <div class="items-collapse">
-                                        <?php if (empty($items)): ?>
-                                            <span>No items recorded.</span>
-                                        <?php else: ?>
-                                            <?php foreach ($items as $item): ?>
-                                                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                                                    <span>• <?php echo htmlspecialchars($item['product_name']); ?> &times; <?php echo (int)$item['quantity']; ?></span>
-                                                    <strong>$<?php echo number_format($item['price'] * $item['quantity'], 2); ?></strong>
-                                                </div>
-                                            <?php endforeach; ?>
-                                        <?php endif; ?>
-                                    </div>
-                                </details>
-                            </td>
-                            <td style="font-size:0.88rem; color:var(--dark);">
-                                <?php echo date('M d, Y h:i A', strtotime($ord['order_date'])); ?>
-                            </td>
-                            <td>
-                                <strong style="font-size:1.1rem; color:var(--dark);">$<?php echo number_format($ord['total_amount'], 2); ?></strong>
-                            </td>
-                            <td>
-                                <span style="font-weight:600;"><?php echo htmlspecialchars($ord['payment_method']); ?></span>
-                            </td>
-                            <td>
-                                <span class="status-badge status-<?php echo htmlspecialchars($status_class); ?>">
-                                    <?php echo htmlspecialchars($ord['payment_status']); ?>
-                                </span>
-                            </td>
-                            <td>
-                                <form action="admin_dashboard.php" method="POST" style="display:flex; gap:6px;">
-                                    <input type="hidden" name="order_id" value="<?php echo $oid; ?>">
-                                    <select name="status" class="form-control" style="padding:6px 10px; font-size:0.85rem; width:130px;">
-                                        <option value="Paid" <?php echo ($ord['payment_status'] === 'Paid') ? 'selected' : ''; ?>>Paid</option>
-                                        <option value="Preparing" <?php echo ($ord['payment_status'] === 'Preparing') ? 'selected' : ''; ?>>Preparing</option>
-                                        <option value="Out for Delivery" <?php echo ($ord['payment_status'] === 'Out for Delivery') ? 'selected' : ''; ?>>Out for Delivery</option>
-                                        <option value="Completed" <?php echo ($ord['payment_status'] === 'Completed') ? 'selected' : ''; ?>>Completed</option>
-                                        <option value="Pending" <?php echo ($ord['payment_status'] === 'Pending') ? 'selected' : ''; ?>>Pending</option>
-                                        <option value="Cancelled" <?php echo ($ord['payment_status'] === 'Cancelled') ? 'selected' : ''; ?>>Cancelled</option>
-                                    </select>
-                                    <button type="submit" name="update_order_status" class="btn btn-secondary" style="padding:6px 12px; font-size:0.8rem;">
-                                        Save
-                                    </button>
-                                </form>
-                            </td>
+            <div style="overflow-x:auto;">
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Customer Contact</th>
+                            <th>Placed At</th>
+                            <th>Amount</th>
+                            <th>Gateway</th>
+                            <th>Status</th>
+                            <th>Quick Status Action</th>
                         </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php while ($ord = $orders_result->fetch_assoc()): 
+                            $oid = $ord['id'];
+                            $status_class = str_replace(' ', '-', $ord['payment_status']);
+                            $items = $order_items_map[$oid] ?? [];
+                        ?>
+                            <tr class="order-row">
+                                <td>
+                                    <strong style="color:var(--primary-dark); font-size:1.1rem;">#<?php echo $oid; ?></strong>
+                                </td>
+                                <td>
+                                    <strong style="color:var(--espresso);"><?php echo htmlspecialchars($ord['customer_name'] ?? 'Walk-in Guest'); ?></strong><br>
+                                    <span style="font-size:0.85rem; color:var(--muted);"><?php echo htmlspecialchars($ord['customer_email'] ?? ''); ?></span><br>
+                                    <span style="font-size:0.85rem; color:var(--body-text); font-weight:600;">📞 <?php echo htmlspecialchars($ord['customer_phone'] ?? 'N/A'); ?></span>
+                                    
+                                    <!-- Expandable Items Breakdown -->
+                                    <details style="margin-top:8px; cursor:pointer;">
+                                        <summary style="color:var(--primary-dark); font-weight:700; font-size:0.85rem;">
+                                            📦 View Items (<?php echo count($items); ?>)
+                                        </summary>
+                                        <div class="items-collapse">
+                                            <?php if (empty($items)): ?>
+                                                <span style="color:var(--muted);">No item records found.</span>
+                                            <?php else: ?>
+                                                <?php foreach ($items as $item): 
+                                                    $item_img = !empty($item['image_path']) ? $item['image_path'] : 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=100&q=80';
+                                                ?>
+                                                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px; border-bottom:1px dashed var(--border); padding-bottom:6px;">
+                                                        <img src="<?php echo htmlspecialchars($item_img); ?>" style="width:34px; height:34px; border-radius:6px; object-fit:cover;">
+                                                        <div style="flex:1;">
+                                                            <strong><?php echo htmlspecialchars($item['product_name']); ?></strong>
+                                                            <span style="color:var(--muted); font-size:0.82rem;"> &times; <?php echo (int)$item['quantity']; ?></span>
+                                                        </div>
+                                                        <strong style="color:var(--espresso);">$<?php echo number_format($item['price'] * $item['quantity'], 2); ?></strong>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
+                                        </div>
+                                    </details>
+                                </td>
+                                <td style="font-size:0.88rem; color:var(--body-text);">
+                                    <?php echo date('M d, Y', strtotime($ord['order_date'])); ?><br>
+                                    <small style="color:var(--muted);"><?php echo date('h:i A', strtotime($ord['order_date'])); ?></small>
+                                </td>
+                                <td>
+                                    <strong style="font-size:1.2rem; color:var(--espresso);">$<?php echo number_format($ord['total_amount'], 2); ?></strong>
+                                </td>
+                                <td>
+                                    <span style="font-weight:600; font-size:0.9rem;"><?php echo htmlspecialchars($ord['payment_method']); ?></span>
+                                </td>
+                                <td>
+                                    <span class="status-badge status-<?php echo htmlspecialchars($status_class); ?>">
+                                        <?php echo htmlspecialchars($ord['payment_status']); ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <form action="admin_dashboard.php" method="POST" style="display:flex; gap:8px; align-items:center;">
+                                        <input type="hidden" name="order_id" value="<?php echo $oid; ?>">
+                                        <select name="status" class="form-control" style="padding:8px 12px; font-size:0.85rem; width:140px;">
+                                            <option value="Paid" <?php echo ($ord['payment_status'] === 'Paid') ? 'selected' : ''; ?>>Paid</option>
+                                            <option value="Preparing" <?php echo ($ord['payment_status'] === 'Preparing') ? 'selected' : ''; ?>>Preparing</option>
+                                            <option value="Out for Delivery" <?php echo ($ord['payment_status'] === 'Out for Delivery') ? 'selected' : ''; ?>>Out for Delivery</option>
+                                            <option value="Completed" <?php echo ($ord['payment_status'] === 'Completed') ? 'selected' : ''; ?>>Completed</option>
+                                            <option value="Pending" <?php echo ($ord['payment_status'] === 'Pending') ? 'selected' : ''; ?>>Pending</option>
+                                            <option value="Cancelled" <?php echo ($ord['payment_status'] === 'Cancelled') ? 'selected' : ''; ?>>Cancelled</option>
+                                        </select>
+                                        <button type="submit" name="update_order_status" class="btn btn-secondary" style="padding:8px 14px; font-size:0.82rem;">
+                                            Save
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
         <?php endif; ?>
     </div>
 
     <footer>
-        <p>&copy; <?php echo date('Y'); ?> Online Bay Bakery. Admin Control Center.</p>
+        <div class="footer-copy">
+            &copy; <?php echo date('Y'); ?> L'Atelier Gourmet Bakery & Boulangerie &bull; Admin Portal
+        </div>
     </footer>
 </body>
 </html>

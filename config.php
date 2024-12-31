@@ -55,8 +55,8 @@ define('SMTP_HOST', env('SMTP_HOST', 'smtp.gmail.com'));
 define('SMTP_PORT', (int)env('SMTP_PORT', 587));
 define('SMTP_USER', env('SMTP_USER', ''));
 define('SMTP_PASS', env('SMTP_PASS', ''));
-define('SMTP_FROM_EMAIL', env('SMTP_FROM_EMAIL', 'no-reply@onlinebaybakery.com'));
-define('SMTP_FROM_NAME', env('SMTP_FROM_NAME', 'Online Bay Bakery'));
+define('SMTP_FROM_EMAIL', env('SMTP_FROM_EMAIL', 'no-reply@latelierbakery.com'));
+define('SMTP_FROM_NAME', env('SMTP_FROM_NAME', "L'Atelier Gourmet Bakery"));
 
 // Twilio SMS Settings
 define('TWILIO_ACCOUNT_SID', env('TWILIO_ACCOUNT_SID', ''));

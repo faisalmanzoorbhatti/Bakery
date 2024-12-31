@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt_check->close();
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-            $stmt_insert = $conn->prepare("INSERT INTO customers (name, email, password, phone) VALUES (?, ?, ?, ?)");
+            $stmt_insert = $conn->prepare("INSERT INTO customers (name, email, password, phone, role) VALUES (?, ?, ?, ?, 'customer')");
             $stmt_insert->bind_param("ssss", $name, $email, $hashed_password, $phone);
 
             if ($stmt_insert->execute()) {
@@ -59,21 +59,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Online Bay Bakery</title>
+    <title>Create Account - L'Atelier Gourmet Bakery</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="auth-wrapper">
         <div class="auth-banner">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <div class="brand-icon" style="background:#ffffff; color:var(--primary);">🥐</div>
+                <span style="font-family:var(--font-heading); font-size:1.5rem; font-weight:700; color:#ffffff; letter-spacing:-0.3px;">L'Atelier Bakery</span>
+            </div>
+            
             <div class="auth-banner-content">
-                <h1>Online Bay Bakery</h1>
-                <p>Join us today to explore fresh handcrafted bakery items, artisanal breads, and custom confections.</p>
+                <div class="hero-pill" style="margin-bottom:14px;">Join Our Bakery Club</div>
+                <h1>Handcrafted Treats Await You.</h1>
+                <p>Register an account to unlock fast express delivery, track your oven-fresh orders, and receive exclusive seasonal baking previews.</p>
+            </div>
+
+            <div style="font-size:0.85rem; color:#d6d3d1;">
+                &copy; <?php echo date('Y'); ?> L'Atelier Gourmet Bakery. All rights reserved.
             </div>
         </div>
+
         <div class="auth-form-side">
             <div class="auth-card">
                 <h2>Create Account</h2>
-                <p class="subtitle">Enter your details to create a new customer account</p>
+                <p class="subtitle">Join our community of artisanal bakery lovers</p>
 
                 <?php if (!empty($error)): ?>
                     <div class="alert alert-error">
@@ -84,29 +95,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <form action="register.php" method="POST">
                     <div class="form-group">
                         <label for="name">Full Name *</label>
-                        <input type="text" id="name" name="name" class="form-control" placeholder="e.g. John Doe" required value="<?php echo htmlspecialchars($_POST['name'] ?? ''); ?>">
+                        <input type="text" id="name" name="name" class="form-control" placeholder="e.g. Faisal Bhatti" required value="<?php echo htmlspecialchars($_POST['name'] ?? ''); ?>">
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" required value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
+                        <input type="email" id="email" name="email" class="form-control" placeholder="faisal@example.com" required value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
                     </div>
 
                     <div class="form-group">
                         <label for="password">Password *</label>
-                        <input type="password" id="password" name="password" class="form-control" placeholder="Create a strong password" required>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Create a strong password (6+ chars)" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="text" id="phone" name="phone" class="form-control" placeholder="e.g. 03001234567" value="<?php echo htmlspecialchars($_POST['phone'] ?? ''); ?>">
+                        <label for="phone">Phone Number (for SMS Tracking)</label>
+                        <input type="text" id="phone" name="phone" class="form-control" placeholder="e.g. 0300-1234567" value="<?php echo htmlspecialchars($_POST['phone'] ?? ''); ?>">
                     </div>
 
-                    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Create Account</button>
+                    <button type="submit" class="btn btn-primary" style="width:100%; padding:14px; margin-top:10px; font-size:1rem;">
+                        Create Customer Account &rarr;
+                    </button>
                 </form>
 
-                <div class="auth-card-footer">
-                    Already have an account? <a href="index.php">Sign In</a>
+                <div style="text-align:center; margin-top:22px; font-size:0.92rem; color:var(--muted);">
+                    Already have an account? <a href="index.php" style="color:var(--primary-dark); font-weight:700; text-decoration:none;">Sign In Here</a>
                 </div>
             </div>
         </div>
