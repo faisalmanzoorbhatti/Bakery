@@ -106,5 +106,17 @@ The login page features **1-click autofill buttons** for rapid testing:
 
 ---
 
+## 🏗️ Technical Architecture & Verified Specifications
+
+| Component | Technology | Specification |
+| :--- | :--- | :--- |
+| **Backend Runtime** | PHP 8.2+ | Native session management, prepared MySQLi statements, BCrypt password hashing |
+| **Relational Database** | MariaDB 13.0+ / MySQL 8.0+ | ACID transactions, indexed category relations, auto-incrementing fulfillment schemas |
+| **Frontend Styling** | Modern CSS3 | Custom properties, responsive fluid typography (`clamp`), glassmorphism, flex/grid layouts |
+| **Visual Catalog** | Unsplash HD Verified CDN | 42 strictly unique, appetizing food photographs with HTTP 200 verification and error fallbacks |
+| **Security & Privacy** | Strict Credentials Isolation | Dynamic `.env` configuration, zero exposed API keys or secrets in version control |
+
+---
+
 ## 📄 License & Intellectual Property
 This project is protected under a [Proprietary & Commercial Evaluation License](LICENSE) &copy; 2024-2026 **Faisal Manzoor Bhatti**. Unauthorized commercial deployment, reselling, or redistribution without permission is strictly prohibited. For commercial licensing or custom bakery deployments, contact `faisalmanzoor11147@gmail.com`.
